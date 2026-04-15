@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Single-turn demo for AWS Bedrock LLM invocation.
+Single-turn demo for AWS Bedrock LLM invocation using LangChain.
 
 Usage:
     python3 single_turn_demo.py
@@ -10,7 +10,7 @@ Usage:
 
 import sys
 import textwrap
-from aws_bedrock_utils import create_bedrock_client, invoke_llm
+from langchain_bedrock_utils import create_bedrock_model, invoke_llm
 from config import AWS_REGION, AWS_PROFILE, MODEL_ID, MAX_TOKENS, TEMPERATURE, LINE_WIDTH
 
 
@@ -27,21 +27,24 @@ def main():
         print("Error: Empty query provided.", file=sys.stderr)
         sys.exit(1)
 
-    # Create Bedrock client
+    # Create LangChain Bedrock model
     try:
-        bedrock_client = create_bedrock_client(AWS_REGION, AWS_PROFILE)
+        bedrock_model = create_bedrock_model(
+            AWS_REGION,
+            MODEL_ID,
+            max_tokens=MAX_TOKENS,
+            temperature=TEMPERATURE,
+            profile=AWS_PROFILE
+        )
     except Exception as e:
-        print(f"Error creating Bedrock client: {e}", file=sys.stderr)
+        print(f"Error creating Bedrock model: {e}", file=sys.stderr)
         sys.exit(1)
 
     # Invoke the model
     try:
         response_text = invoke_llm(
-            bedrock_client,
-            MODEL_ID,
-            prompt=user_query,
-            max_tokens=MAX_TOKENS,
-            temperature=TEMPERATURE
+            bedrock_model,
+            prompt=user_query
         )
 
         # Format output with > prefix on each line, removing leading/trailing whitespace

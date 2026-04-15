@@ -1,5 +1,5 @@
 """
-Shared configuration for AWS Bedrock demos.
+Shared configuration for LangChain Bedrock demos.
 
 This file contains configuration settings used across all demo scripts.
 """
@@ -17,7 +17,7 @@ AWS_PROFILE = None  # Set to your AWS profile name, or None for default credenti
 # ============================================================================
 
 # Model Configuration
-# Examples of available models (now uses Converse API - works with all models):
+# Examples of available models (LangChain supports all Bedrock models):
 # - "anthropic.claude-3-5-sonnet-20241022-v2:0" (Claude)
 # - "us.anthropic.claude-3-5-sonnet-20241022-v2:0" (cross-region inference profile)
 # - "us.deepseek.r1-v1:0" (DeepSeek via inference profile)
